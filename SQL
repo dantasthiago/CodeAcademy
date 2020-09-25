@@ -1,0 +1,72 @@
+--SELECT *
+--FROM countries
+--ORDER BY NAME;
+
+--SELECT *
+--FROM population_years
+--ORDER BY country_id;
+
+--SELECT COUNT(*)
+--FROM countries
+--WHERE continent = 'Africa';
+
+---- AFRICA 56
+
+--WITH temporary_continent AS (SELECT *
+--FROM countries
+--LEFT JOIN population_years
+  --ON countries.id = population_years.id
+--WHERE continent = 'Oceania')
+      
+--SELECT SUM (population)
+--FROM temporary_continent
+--WHERE year = '2005';
+--52.813
+
+--WITH temporary_south_america AS (SELECT *
+--FROM countries
+--LEFT JOIN population_years
+  --ON countries.id = population_years.country_id
+    --WHERE continent = 'South America')
+--SELECT AVG(population)
+--FROM temporary_south_america
+--WHERE year = 2003;
+--25,89
+
+--SELECT *
+--FROM countries
+--LEFT JOIN population_years
+ --ON countries.id = population_years.country_id
+ --WHERE year = 2007
+  --ORDER BY population DESC;
+  --niue ou serbia and montenegro
+
+--WITH temporary_poland AS (SELECT *
+--FROM countries
+--LEFT JOIN population_years
+  --ON countries.id = population_years.country_id
+  --WHERE name = 'Poland')
+
+--SELECT ROUND(AVG (population), 2)
+--FROM temporary_poland;
+
+--38,56
+
+--SELECT *
+--FROM countries
+--WHERE name LIKE '%The%';
+--4
+
+WITH continent_population AS (SELECT population_years.population, countries.continent, population_years.year
+FROM countries
+LEFT JOIN population_years
+  ON countries.id = population_years.country_id
+WHERE year = 2010
+ORDER BY continent)
+
+SELECT SUM(population), continent
+FROM continent_population
+GROUP BY continent
+ORDER BY continent DESC;
+
+--
